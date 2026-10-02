@@ -196,9 +196,10 @@ function handleCardClick(card) {
     updateStats();
     resetSelection();
 
-    if (state.pairsFound === 8) {
+       if (state.pairsFound === 8) {
       state.isFinished = true;
-      // Модалку победы добавим на следующем шаге
+      // Небольшая задержка, чтобы игрок успел увидеть последнюю пару
+      setTimeout(showWinModal, 400);
     }
   } else {
     // --- Не совпали: блокируем и закрываем с задержкой ---
