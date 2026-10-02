@@ -329,3 +329,102 @@ function buildWinContent(container) {
 function showWinModal() {
   openModal(winModal, buildWinContent);
 }
+
+// ============================================
+// Работа с localStorage
+// ============================================
+const RESULTS_KEY = 'memory-game-results';
+const MAX_RESULTS = 10;
+
+function loadResults() {
+  try {
+    const raw = localStorage.getItem(RESULTS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveResults(results) {
+  try {
+    localStorage.setItem(RESULTS_KEY, JSON.stringify(results));
+  } catch (e) {
+    // игнорируем ошибки записи
+  }
+}
+
+function addResult(moves) {
+  const results = loadResults();
+  const newResult = {
+    moves,
+    date: Date.now(),
+  };
+
+  results.push(newResult);
+
+  // Сортировка: по ходам (по возрастанию), при равенстве — по дате (раньше выше)
+  results.sort((a, b) => {
+    if (a.moves !== b.moves) return a.moves - b.moves;
+    return a.date - b.date;
+  });
+
+  // Оставляем только 10 лучших
+  const top10 = results.slice(0, MAX_RESULTS);
+  saveResults(top10);
+}
+
+function formatDate(timestamp) {
+  const d = new Date(timestamp);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}.${month}.${year}`;
+}
+
+// ============================================
+// Модальное окно таблицы лидеров
+// ============================================
+const leaderboardModal = createModal();
+
+function buildLeaderboardContent(container) {
+  const title = el('h2', 'modal__title', 'Таблица лидеров');
+  container.append(title);
+
+  const results = loadResults();
+
+  if (results.length === 0) {
+    const empty = el('p', 'leaderboard__empty', 'Пока нет результатов');
+    container.append(empty);
+  } else {
+    const list = el('ul', 'leaderboard');
+
+    results.forEach((result, index) => {
+      const item = el('li', 'leaderboard__item');
+
+      const place = el('span', 'leaderboard__place', `${index + 1}.`);
+      const moves = el('span', 'leaderboard__moves', `Ходов: ${result.moves}`);
+      const date = el('span', 'leaderboard__date', formatDate(result.date));
+
+      item.append(place, moves, date);
+      list.append(item);
+    });
+
+    container.append(list);
+  }
+
+  const buttons = el('div', 'modal__buttons');
+  const closeBtn = el('button', 'btn btn--secondary', 'Закрыть');
+  closeBtn.type = 'button';
+  closeBtn.addEventListener('click', () => closeModal(leaderboardModal));
+  buttons.append(closeBtn);
+
+  container.append(buttons);
+}
+
+function showLeaderboard() {
+  openModal(leaderboardModal, buildLeaderboardContent);
+}
+
+leaderboardBtn.addEventListener('click', showLeaderboard);
