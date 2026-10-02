@@ -196,8 +196,9 @@ function handleCardClick(card) {
     updateStats();
     resetSelection();
 
-       if (state.pairsFound === 8) {
+          if (state.pairsFound === 8) {
       state.isFinished = true;
+      addResult(state.moves);
       // Небольшая задержка, чтобы игрок успел увидеть последнюю пару
       setTimeout(showWinModal, 400);
     }
