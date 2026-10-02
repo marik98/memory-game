@@ -143,3 +143,108 @@ function updateStats() {
 // ============================================
 updateStats();
 renderCards();
+
+// ============================================
+// Логика выбора карточек
+// ============================================
+const FLIP_DELAY = 1000;
+let flipTimer = null;
+
+function flipCard(card) {
+  card.classList.add('is-flipped');
+}
+
+function unflipCard(card) {
+  card.classList.remove('is-flipped');
+}
+
+function resetSelection() {
+  state.firstCard = null;
+  state.secondCard = null;
+}
+
+function isCardClickable(card) {
+  if (state.isLocked) return false;
+  if (state.isFinished) return false;
+  if (card.classList.contains('is-flipped')) return false;
+  return true;
+}
+
+function handleCardClick(card) {
+  if (!isCardClickable(card)) return;
+
+  // Открываем карточку
+  flipCard(card);
+
+  // Первая карточка пары
+  if (!state.firstCard) {
+    state.firstCard = card;
+    return;
+  }
+
+  // Вторая карточка — засчитываем ход
+  state.secondCard = card;
+  state.moves += 1;
+  updateStats();
+
+  const firstPairId = state.firstCard.dataset.pairId;
+  const secondPairId = card.dataset.pairId;
+
+  if (firstPairId === secondPairId) {
+    // --- Совпали ---
+    state.pairsFound += 1;
+    updateStats();
+    resetSelection();
+
+    if (state.pairsFound === 8) {
+      state.isFinished = true;
+      // Модалку победы добавим на следующем шаге
+    }
+  } else {
+    // --- Не совпали: блокируем и закрываем с задержкой ---
+    state.isLocked = true;
+
+    const firstCard = state.firstCard;
+    const secondCard = state.secondCard;
+
+    flipTimer = setTimeout(() => {
+      unflipCard(firstCard);
+      unflipCard(secondCard);
+      resetSelection();
+      state.isLocked = false;
+      flipTimer = null;
+    }, FLIP_DELAY);
+  }
+}
+
+// Делегирование клика — один обработчик на всё поле
+board.addEventListener('click', (event) => {
+  const card = event.target.closest('.card');
+  if (!card) return;
+  handleCardClick(card);
+});
+
+// ============================================
+// Новая игра
+// ============================================
+function resetGame() {
+  // Отменяем активный таймер закрытия
+  if (flipTimer) {
+    clearTimeout(flipTimer);
+    flipTimer = null;
+  }
+
+  // Сбрасываем состояние
+  state.moves = 0;
+  state.pairsFound = 0;
+  state.firstCard = null;
+  state.secondCard = null;
+  state.isLocked = false;
+  state.isFinished = false;
+
+  // Обновляем счётчики и поле
+  updateStats();
+  renderCards();
+}
+
+newGameBtn.addEventListener('click', resetGame);
