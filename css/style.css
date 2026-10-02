@@ -223,3 +223,43 @@ body {
 body.modal-open {
   overflow: hidden;
 }
+
+/* Таблица лидеров */
+.leaderboard {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.leaderboard__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #c1b4a6;
+  font-size: 15px;
+}
+
+.leaderboard__item:last-child {
+  border-bottom: none;
+}
+
+.leaderboard__place {
+  font-weight: 600;
+  min-width: 24px;
+}
+
+.leaderboard__moves {
+  flex: 1;
+}
+
+.leaderboard__date {
+  color: #665f55;
+  font-size: 14px;
+}
+
+.leaderboard__empty {
+  margin: 20px 0;
+  color: #665f55;
+}
