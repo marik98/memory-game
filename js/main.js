@@ -248,3 +248,83 @@ function resetGame() {
 }
 
 newGameBtn.addEventListener('click', resetGame);
+
+// ============================================
+// Общий компонент модального окна
+// ============================================
+function createModal() {
+  const modal = el('div', 'modal');
+  modal.setAttribute('aria-hidden', 'true');
+
+  const overlay = el('div', 'modal__overlay');
+  const content = el('div', 'modal__content');
+  content.setAttribute('role', 'dialog');
+  content.setAttribute('aria-modal', 'true');
+
+  modal.append(overlay, content);
+  document.body.append(modal);
+
+  // Клик по тёмному фону — закрыть
+  overlay.addEventListener('click', () => closeModal(modalInstance));
+
+  // Escape — закрыть
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+      closeModal(modalInstance);
+    }
+  });
+
+  return modal;
+}
+
+function openModal(modalInstance, contentBuilder) {
+  const content = modalInstance.querySelector('.modal__content');
+
+  // Очищаем старый контент
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
+
+  // Строим новый контент
+  contentBuilder(content);
+
+  modalInstance.classList.add('is-open');
+  modalInstance.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+}
+
+function closeModal(modalInstance) {
+  modalInstance.classList.remove('is-open');
+  modalInstance.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+}
+
+// ============================================
+// Модальное окно победы
+// ============================================
+const winModal = createModal();
+
+function buildWinContent(container) {
+  const title = el('h2', 'modal__title', 'Победа!');
+  const text = el('p', 'modal__text', `Вы нашли все пары за ${state.moves} ходов.`);
+
+  const buttons = el('div', 'modal__buttons');
+
+  const playAgainBtn = el('button', 'btn btn--primary', 'Новая игра');
+  playAgainBtn.type = 'button';
+  playAgainBtn.addEventListener('click', () => {
+    closeModal(winModal);
+    resetGame();
+  });
+
+  const closeBtn = el('button', 'btn btn--secondary', 'Закрыть');
+  closeBtn.type = 'button';
+  closeBtn.addEventListener('click', () => closeModal(winModal));
+
+  buttons.append(playAgainBtn, closeBtn);
+  container.append(title, text, buttons);
+}
+
+function showWinModal() {
+  openModal(winModal, buildWinContent);
+}
