@@ -137,6 +137,11 @@ body {
   object-fit: contain;
 }
 
+/* Открытая карточка — поворот */
+.card.is-flipped .card__inner {
+  transform: rotateY(180deg);
+}
+
 /* Адаптив */
 @media (max-width: 600px) {
   .app {
