@@ -39,7 +39,17 @@ body {
 }
 .header__buttons {
   display: flex;
-  gap: 12px;
+  gap: 16px;
+  align-items: center;
+}
+
+.header__buttons .btn {
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 100px;
+  border-width: 2px;
+  white-space: nowrap;
 }
 
 /* Кнопки */
