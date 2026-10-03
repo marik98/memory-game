@@ -24,7 +24,11 @@ body {
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 20px 0;
+  padding: 20px 24px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(64, 63, 61, 0.08);
 }
 
 .header__title {
