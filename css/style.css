@@ -122,6 +122,12 @@ body {
   background: none;
   cursor: pointer;
   perspective: 1000px;
+  filter: drop-shadow(0 4px 8px rgba(64, 63, 61, 0.25));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.card:hover {
+  filter: drop-shadow(0 6px 12px rgba(64, 63, 61, 0.35));
 }
 
 .card__inner {
