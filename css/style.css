@@ -124,6 +124,10 @@ body {
 
 .card__face--back {
   background-color: #403f3d;
+  background-image: url('../img/card-back.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card__face--front {
