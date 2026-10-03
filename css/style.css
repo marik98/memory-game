@@ -110,8 +110,6 @@ body {
   padding: 24px;
   background-color: rgba(64, 63, 61, 0.12);
   border-radius: 32px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><line x1='0' y1='0' x2='24' y2='0' stroke='%23c1b4a6' stroke-width='2' stroke-dasharray='4 4'/><line x1='0' y1='0' x2='0' y2='24' stroke='%23c1b4a6' stroke-width='2' stroke-dasharray='4 4'/></svg>");
-  background-size: 24px 24px;
 }
 /* Карточка */
 .card {
@@ -125,6 +123,42 @@ body {
   perspective: 1000px;
   filter: drop-shadow(0 4px 8px rgba(64, 63, 61, 0.25));
   transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Пунктирные линии между карточками */
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Вертикальная линия справа от карточки */
+.card::before {
+  top: 0;
+  bottom: 0;
+  right: -11px;
+  width: 0;
+  border-right: 2px dashed #c1b4a6;
+}
+
+/* Горизонтальная линия снизу от карточки */
+.card::after {
+  left: 0;
+  right: 0;
+  bottom: -11px;
+  height: 0;
+  border-bottom: 2px dashed #c1b4a6;
+}
+
+/* Убираем вертикальные линии у 4-го столбца */
+.card:nth-child(4n)::before {
+  display: none;
+}
+
+/* Убираем горизонтальные линии у 4-й строки */
+.card:nth-child(n + 13)::after {
+  display: none;
 }
 
 .card:hover {
