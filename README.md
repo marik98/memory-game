@@ -28,7 +28,10 @@
 
 - ## Источники
 
-Иконки карточек: [Flaticon](https://www.flaticon.com/)
+Иконки карточек:
+[Flaticon](https://www.flaticon.com/)
+Style: (Kawaii Flat) 
+https://www.flaticon.com/authors/kawaii/flat?author_id=1&type=standard
 
 ## Как запустить локально
 
