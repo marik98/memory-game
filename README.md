@@ -36,3 +36,21 @@
    ```bash
    git clone https://github.com/marik98/memory-game.git
    cd memory-game
+   ```
+
+2. Переключитесь на ветку с игрой:
+   ```bash
+   git checkout -b memory-game origin/memory-game
+   ```
+
+3. Откройте файл `index.html` в браузере.
+
+   **Проще всего** — двойной клик по `index.html` в проводнике.  
+   **Из Git Bash (Windows)**:
+   ```bash
+   start index.html
+   ```
+   **Из терминала macOS / Linux**:
+   ```bash
+   open index.html
+   ```
