@@ -266,13 +266,11 @@ function createModal() {
   modal.append(overlay, content);
   document.body.append(modal);
 
-  // Клик по тёмному фону — закрыть
-  overlay.addEventListener('click', () => closeModal(modalInstance));
+  overlay.addEventListener('click', () => closeModal(modal));
 
-  // Escape — закрыть
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-      closeModal(modalInstance);
+      closeModal(modal);
     }
   });
 
