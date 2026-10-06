@@ -1,1 +1,59 @@
-# memory-game
+
+# Memory Game
+
+Игра на поиск пар: 16 карточек (8 пар), игрок открывает по две карточки и ищет совпадения за минимальное число ходов.
+
+## Демо
+
+🔗 [https://marik98.github.io/memory-game/](https://marik98.github.io/memory-game/)
+
+## Возможности
+
+- 16 карточек (8 пар) с картинками
+- Случайное перемешивание при каждой игре (алгоритм Фишера-Йетса)
+- Счётчики ходов и найденных пар
+- Модальное окно победы с итоговым числом ходов
+- Таблица лидеров: топ-10 результатов, сохраняется в `localStorage`
+- Кнопка «Новая игра» в хедере и в модалке победы
+- Закрытие модальных окон: кнопка, клик по фону, Escape
+- Блокировка прокрутки при открытых модалках
+- Адаптивная вёрстка
+
+## Технологии
+
+- HTML (генерируется через JavaScript)
+- CSS
+- Чистый JavaScript (ES6+)
+- `localStorage` для хранения результатов
+
+- ## Источники
+
+Иконки карточек:
+[Flaticon](https://www.flaticon.com/)
+Style: (Kawaii Flat) 
+https://www.flaticon.com/authors/kawaii/flat?author_id=1&type=standard
+
+## Как запустить локально
+
+1. Склонируйте репозиторий:
+   ```bash
+   git clone https://github.com/marik98/memory-game.git
+   cd memory-game
+   ```
+
+2. Переключитесь на ветку с игрой:
+   ```bash
+   git checkout -b memory-game origin/memory-game
+   ```
+
+3. Откройте файл `index.html` в браузере.
+
+   **Проще всего** — двойной клик по `index.html` в проводнике.  
+   **Из Git Bash (Windows)**:
+   ```bash
+   start index.html
+   ```
+   **Из терминала macOS / Linux**:
+   ```bash
+   open index.html
+   ```
